@@ -1,0 +1,14 @@
+{
+  "generator-jhipster": {
+    "appsFolders": [
+      "disaster-service",
+      "edge-server",
+      "message-service",
+      "user-service"
+    ],
+    "directoryPath": "../",
+    "useElk": true,
+    "adminPassword": "admin",
+    "jwtSecretKey": "b63e1f1f99389d025564150c23e52c177966a1d8"
+  }
+}
