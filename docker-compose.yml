@@ -2,6 +2,7 @@ version: '2'
 services:
     disasterservice-app:
         image: disasterservice
+        container_name: ee-disasterservice
         external_links:
             - disasterservice-postgresql:postgresql
             - jhipster-registry:registry
@@ -11,6 +12,9 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/DisasterService
             - JHIPSTER_SLEEP=10
             - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://admin:admin@registry:8761/eureka
+        depends_on:
+            - jhipster-registry
+            - disasterservice-postgresql
     disasterservice-postgresql:
         container_name: disasterservice-postgresql
         image: postgres:9.5.2
@@ -20,6 +24,7 @@ services:
     
     edgeserver-app:
         image: edgeserver
+        container_name: ee-edgeserver
         external_links:
             - edgeserver-postgresql:postgresql
             - jhipster-registry:registry
@@ -32,6 +37,9 @@ services:
             - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://admin:admin@registry:8761/eureka
         ports:
             - 8080:8080
+        depends_on:
+            - jhipster-registry
+            - edgeserver-postgresql
     edgeserver-postgresql:
         container_name: edgeserver-postgresql
         image: postgres:9.5.2
@@ -41,6 +49,7 @@ services:
     
     messageservice-app:
         image: messageservice
+        container_name: ee-messageservice
         external_links:
             - messageservice-postgresql:postgresql
             - jhipster-registry:registry
@@ -50,6 +59,9 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/MessageService
             - JHIPSTER_SLEEP=10
             - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://admin:admin@registry:8761/eureka
+        depends_on:
+            - jhipster-registry
+            - messageservice-postgresql
     messageservice-postgresql:
         container_name: messageservice-postgresql
         image: postgres:9.5.2
@@ -59,6 +71,7 @@ services:
     
     userservice-app:
         image: userservice
+        container_name: ee-userservice
         external_links:
             - userservice-postgresql:postgresql
             - jhipster-registry:registry
@@ -68,6 +81,9 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/UserService
             - JHIPSTER_SLEEP=10
             - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://admin:admin@registry:8761/eureka
+        depends_on:
+            - jhipster-registry
+            - userservice-postgresql
     userservice-postgresql:
         container_name: userservice-postgresql
         image: postgres:9.5.2
@@ -79,6 +95,8 @@ services:
         extends:
             file: jhipster-registry.yml
             service: jhipster-registry
+        depends_on:
+            - jhipster-console 
     jhipster-elasticsearch:
         extends:
             file: jhipster-console.yml
@@ -91,3 +109,7 @@ services:
         extends:
             file: jhipster-console.yml
             service: jhipster-console
+        depends_on:
+            - jhipster-elasticsearch
+            - jhipster-logstash
+
